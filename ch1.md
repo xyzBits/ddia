@@ -1,4 +1,6 @@
 # 第一章：可靠性、可伸缩性和可维护性
+# chapter 1: reliability, scalability and maintainability
+# chapter 1: reliable, scalable and maintainable applications
 
 ![](img/ch1.png)
 
@@ -7,6 +9,13 @@
 > —— [艾伦・凯](http://www.drdobbs.com/architecture-and-design/interview-with-alan-kay/240003442) 在接受 Dobb 博士杂志采访时说（2012 年）
 
 -----------------------
+> internet is so well that majority people think it as natural resource like Pacific Ocean, instead of created by human. do you know when does this large-scale and no error technique emerge.
+> 
+> -- Doctor Dobb said when he received interview of magzine
+
+> The Internet was done so well that most people think of it as a natural resource like the Pacific Ocean, rather than something that was man-made. When was the last time a technology with a scale like that was so error-free?
+> 
+> -- in interview with Dr. Dobb
 
 [TOC]
 
