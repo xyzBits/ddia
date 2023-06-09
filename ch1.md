@@ -21,22 +21,86 @@
 
 现今很多应用程序都是 **数据密集型（data-intensive）** 的，而非 **计算密集型（compute-intensive）** 的。因此 CPU 很少成为这类应用的瓶颈，更大的问题通常来自数据量、数据复杂性、以及数据的变更速度。
 
+nowadays most application are data-intensive, rather compute-intensive. thus bottle check is not from cpu,
+it from volume of data, and the speed of data change.
+
+[Many applications today are data-intensive, as opposed to compute-intensive. raw CPU power is 
+rarely a limiting factor for these applications-bigger problems are usually the 
+amount of data, the complexity of data, and the speed at which it is changing]
+
 数据密集型应用通常由标准组件构建而成，标准组件提供了很多通用的功能；例如，许多应用程序都需要：
 
+data-intensive application is composed of standard component, which provide general functionality;
+for example, most applications require:
+
+[A data-intensive application is typically built from standard building blocks that provide 
+commonly needed functionality. For example, many applications need to  ]
+
  - 存储数据，以便自己或其他应用程序之后能再次找到 （*数据库，即 databases*）
+ - store data to find for self for other application
+ - [Store data so that they, or another application, can find it again later]
  - 记住开销昂贵操作的结果，加快读取速度（*缓存，即 caches*）
+ - remeber the result of expensive operation, accelerate read speed(caches)
+ - [Remember the result of an expensive operation, to speed up reads]
  - 允许用户按关键字搜索数据，或以各种方式对数据进行过滤（*搜索索引，即 search indexes*）
+ - allow user to search data by keywords or filter data by several approach
+ - [Allow users to search data by keyword or filter it in various ways]
  - 向其他进程发送消息，进行异步处理（*流处理，即 stream processing*）
+ - send message to other process, process synchronize
+ - [Send a message to another process, to be handled asynchronously] 
  - 定期处理累积的大批量数据（*批处理，即 batch processing*）
+ - handle a vast amount of accumulated data periodically
+ - [Periodically crunch a large amount of accumulated data]
 
-如果这些功能听上去平淡无奇，那是因为这些 **数据系统（data system）** 是非常成功的抽象：我们一直不假思索地使用它们并习以为常。绝大多数工程师不会幻想从零开始编写存储引擎，因为在开发应用时，数据库已经是足够完美的工具了。
+如果这些功能听上去平淡无奇，那是因为这些 **数据系统（data system）** 是非常成功的抽象：我们一直不假思索地使用它们并习以为常。
+绝大多数工程师不会幻想从零开始编写存储引擎，因为在开发应用时，数据库已经是足够完美的工具了。
 
-但现实没有这么简单。不同的应用有着不同的需求，因而数据库系统也是百花齐放，有着各式各样的特性。实现缓存有很多种手段，创建搜索索引也有好几种方法，诸如此类。因此在开发应用前，我们依然有必要先弄清楚最适合手头工作的工具和方法。而且当单个工具解决不了你的问题时，组合使用这些工具可能还是有些难度的。
+if these functionality looks ordinary. because the abstract of data system is very successful.
+we are used to use it. most engineer do not wonder write storage engine from stratch, 
+database is very prefect.
 
-本书将是一趟关于数据系统原理、实践与应用的旅程，并讲述了设计数据密集型应用的方法。我们将探索不同工具之间的共性与特性，以及各自的实现原理。
+[If that sounds painfully obvious, that's just because these data systems are such a successful abstraction:
+we use them all the time without thinking too much. When building an application, most engineers wouldn't 
+dream of writing a new data storage engine from scratch, because database are a perfectly good tool for the job]
+
+但现实没有这么简单。不同的应用有着不同的需求，因而数据库系统也是百花齐放，有着各式各样的特性。实现缓存有很多种手段，
+创建搜索索引也有好几种方法，诸如此类。因此在开发应用前，我们依然有必要先弄清楚最适合手头工作的工具和方法。
+而且当单个工具解决不了你的问题时，组合使用这些工具可能还是有些难度的。
+
+but real word is not easy. different applications have different requirements. 
+so there are many database system with lots of features. there are many approach to implement
+cache and create index, and so on. so before develop application, we must make clear 
+that what is most suitable instrument and method. it is difficult when complex using this instrument.
+
+[But reality is not that simple. There are many database systems with different characteristics, 
+because different applications have different requirements. There are various approaches to caching, 
+several ways of building search indexes, and so on. When Building an application, we still need to 
+figure out which tools and which approaches are most appropriate for the task at hand. And it can be 
+hard to combine tools when you need to do something that a single tool cannot do alone ]
+
+本书将是一趟关于数据系统原理、实践与应用的旅程，并讲述了设计数据密集型应用的方法。我们将探索不同工具之间的共性与特性，
+以及各自的实现原理。
+
+the text is a journey of database system principle , practice and application, 
+and relate the approach to design data-intensive application.
+we will explore common and special feature among different instrument, and its implementation theory.
+
+[This book is a journey through both the principles and the practicalities of data systems, and how
+you can use them to build data-intensive applications. We will explore what different tools have in 
+common, what distinguishes them, and how they achieve their characteristics.]
 
 本章将从我们所要实现的基础目标开始：可靠、可伸缩、可维护的数据系统。我们将澄清这些词语的含义，概述考量这些目标的方法。并回顾一些后续章节所需的基础知识。在接下来的章节中我们将抽丝剥茧，研究设计数据密集型应用时可能遇到的设计决策。
 
+this chapter start from fundamental object we are going to implement: reliable, 
+scalable, and maintainable data system. 
+we will clarify these words, consider the method of examination. and recall fundamental knowledge. 
+in the next chapter we will look at designing policy when build data intensive application.
+
+[In this chapter, we will start by exploring the fundamentals of what we are trying to achieve:
+reliable, scalable, and maintainable data systems. We'll clarify what those things mean, outline 
+some ways of thinking about them, and go over the basics that we will need for later chapters. 
+In the following chapters we will continue layer by layer, looking at different design decisions 
+that need to be considered when working on a data-intensive application.]
 
 ## 关于数据系统的思考
 
